@@ -22,7 +22,7 @@ namespace budget_management.Models.Domain.Catalog
         /// <summary>
         /// Gets or sets the parent category identifier
         /// </summary>
-        public int ParentId { get; protected set; }
+        public int? ParentId { get; protected set; }
 
         /// <summary>
         /// Gets or sets the creation time

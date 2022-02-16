@@ -26,6 +26,7 @@ namespace budget_management.Models.Builders.Finance
                 b.ConfigureByConvention(); //auto configure for the base class props
 
                 //...
+                b.Property(nameof(Operation.Type)).HasMaxLength(10); 
                 b.Property(nameof(Operation.Amount)).HasPrecision(18, 4).IsRequired(); 
 
                 b.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId).IsRequired(true); 

@@ -1,5 +1,7 @@
 ﻿using budget_management.Models.Domain.Catalog;
 
+using System.ComponentModel.DataAnnotations;
+
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -15,7 +17,8 @@ namespace budget_management.AppServices.Catalog
     {
         #region Ctor
 
-        public CategoryAppService(IRepository<Category, int> repository) : base(repository)
+        public CategoryAppService(IRepository<Category, int> repository) 
+            : base(repository)
         {
         }
 
@@ -29,12 +32,33 @@ namespace budget_management.AppServices.Catalog
             public string Description { get; set; }
             public int? ParentId { get; set; }
         }
-
-        public class CreateUpdateCategoryDto
-        { 
+         
+        public class CreateUpdateCategoryDto: IValidatableObject
+        {
+            [Required]
+            [StringLength(50)]
             public string Label { get; set; }
+
+            [StringLength(400)]
             public string Description { get; set; }
+
             public int? ParentId { get; set; }
+
+            public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+            {
+                if (ParentId > 0)
+                {
+                    var catRepo = validationContext.GetService<IRepository<Category, int>>();
+                    
+                    if (!(catRepo?.GetDbSet()?.Any(x => x.Id == ParentId)) ?? true)
+                    { 
+                        yield return new ValidationResult(
+                            $"La catégorie {ParentId} n'est pas valide ou n'existe pas.",
+                            new[] { "ParentId" }
+                        );
+                    }
+                }
+            }
         }
 
         #endregion

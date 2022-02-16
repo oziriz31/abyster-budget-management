@@ -4,10 +4,13 @@ using Microsoft.OpenApi.Models;
 
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
+using Volo.Abp.AutoMapper;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.FluentValidation;
 using Volo.Abp.IdentityServer.Jwt;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
@@ -18,7 +21,9 @@ namespace budget_management
         typeof(AbpAutofacModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         //typeof(AbpAccountWebIdentityServerModule),
+        typeof(AbpFluentValidationModule),
         typeof(AbpAspNetCoreSerilogModule),
+        typeof(AbpAutoMapperModule),
         typeof(AbpSwashbuckleModule))]
     public class AppHostModule : AbpModule
     {
@@ -39,9 +44,19 @@ namespace budget_management
                 options.AddDefaultRepositories(includeAllEntities: true);
             });
 
+            Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = true;
+            });
+
             Configure<AbpDbContextOptions>(options =>
             {
                 options.UseSqlServer();
+            });
+
+            Configure<AbpAutoMapperOptions>(options =>
+            {
+                options.AddMaps<AppHostModule>();
             });
         }
 

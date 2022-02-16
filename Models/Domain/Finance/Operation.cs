@@ -22,7 +22,7 @@ namespace budget_management.Models.Domain.Finance
         /// <summary>
         /// Gets or sets the operaton type
         /// </summary>
-        public OperationType StatusType
+        public OperationType OpType
         {
             get { return (OperationType)TypeId; }
             set

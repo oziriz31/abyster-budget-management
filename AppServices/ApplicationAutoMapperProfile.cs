@@ -19,16 +19,14 @@ namespace budget_management.AppServices
         {
             // Category entity mapping
             CreateMap<Category, CategoryAppService.CategoryDto>();
-            CreateMap<CategoryAppService.CategoryDto, CategoryAppService.CreateUpdateCategoryDto>();
             CreateMap<CategoryAppService.CreateUpdateCategoryDto, Category>();
         }
 
         private void CreateOperationMaps()
         {
             // Category entity mapping
-            CreateMap<Operation, OperationApService.OperationDto>();
-            CreateMap<OperationApService.OperationDto, OperationApService.CreateUpdateOperationDto>();
-            CreateMap<OperationApService.CreateUpdateOperationDto, Operation>();
+            CreateMap<Operation, OperationAppService.OperationDto>();
+            CreateMap<OperationAppService.CreateUpdateOperationDto, Operation>();
         }
     }
 }

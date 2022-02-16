@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 using budget_management.Models;
@@ -12,9 +13,10 @@ using budget_management.Models;
 namespace budget_management.Migrations
 {
     [DbContext(typeof(BudgetManagDbContext))]
-    partial class BudgetManagDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220216141003_CategoryParentNotRequired")]
+    partial class CategoryParentNotRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,12 +106,11 @@ namespace budget_management.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int>("OpType")
+                    b.Property<int>("StatusType")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");

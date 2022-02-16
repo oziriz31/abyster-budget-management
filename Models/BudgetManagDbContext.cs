@@ -1,5 +1,6 @@
 ﻿using budget_management.Models.Builders;
 using budget_management.Models.Domain.Catalog;
+using budget_management.Models.Domain.Finance;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,7 @@ namespace budget_management.Models
         public DbSet<IdentityLinkUser> LinkUsers { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Operation> Operations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
