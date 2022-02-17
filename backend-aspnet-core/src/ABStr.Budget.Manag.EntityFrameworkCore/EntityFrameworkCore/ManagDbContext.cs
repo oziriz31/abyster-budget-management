@@ -1,4 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ABStr.Budget.Manag.Builders.Catalog;
+using ABStr.Budget.Manag.Builders.Finance;
+using ABStr.Budget.Manag.Entities.Catalog;
+using ABStr.Budget.Manag.Entities.Finance;
+
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -50,6 +55,10 @@ public class ManagDbContext :
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
+    // Budget Management
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Operation> Operations { get; set; }
+
     #endregion
 
     public ManagDbContext(DbContextOptions<ManagDbContext> options)
@@ -74,6 +83,8 @@ public class ManagDbContext :
         builder.ConfigureTenantManagement();
 
         /* Configure your own tables/entities inside here */
+        builder.ConfigureCategory();
+        builder.ConfigureOperation();
 
         //builder.Entity<YourEntity>(b =>
         //{

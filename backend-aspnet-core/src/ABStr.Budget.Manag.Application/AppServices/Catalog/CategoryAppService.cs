@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -52,13 +53,15 @@ namespace ABStr.Budget.Manag.AppServices.Catalog
                 if (ParentId > 0)
                 {
                     var catRepo = validationContext.GetService<IRepository<Category, int>>();
-                    /*if (catRepo. ?? true)
-                    { 
+                    var query = catRepo.GetQueryableAsync().GetAwaiter().GetResult();
+
+                    if(query.Any(x => x.Id == ParentId))
+                    {
                         yield return new ValidationResult(
-                            $"La catégorie {ParentId} n'est pas valide ou n'existe pas.",
-                            new[] { "ParentId" }
-                        );
-                    }*/
+                           $"La catégorie {ParentId} n'est pas valide ou n'existe pas.",
+                           new[] { "ParentId" }
+                       );
+                    }
                 }
             }
         }
